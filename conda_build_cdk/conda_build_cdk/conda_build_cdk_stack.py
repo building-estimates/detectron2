@@ -56,6 +56,7 @@ class CondaBuildCdkStack(Stack):
                 commands=[
                     "conda config --add channels conda-forge",
                     "conda config --add channels fastai",
+                    "conda config --add channels pytorch",
                     "conda install pytorch=1.10.0 numpy=1.21.6 cxx-compiler conda-build python=3.8.3 boto3",
                     "python setup.py bdist_conda",
                     "cp /opt/conda/conda-bld/linux-64/detectron2-* /mnt/channels/$conda_channel_name/linux-64/",
