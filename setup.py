@@ -9,6 +9,7 @@ from setuptools import find_packages, setup
 from typing import List
 import torch
 from torch.utils.cpp_extension import CUDA_HOME, CppExtension, CUDAExtension
+import conda_build.bdist_conda
 
 torch_ver = [int(x) for x in torch.__version__.split(".")[:2]]
 assert torch_ver >= [1, 8], "Requires PyTorch >= 1.8"
@@ -154,7 +155,9 @@ setup(
     packages=find_packages(exclude=("configs", "tests*")) + list(PROJECTS.keys()),
     package_dir=PROJECTS,
     package_data={"detectron2.model_zoo": get_model_zoo_configs()},
-    python_requires=">=3.6",
+    python_requires=">=3.8,<3.9",
+    distclass=conda_build.bdist_conda.CondaDistribution,
+    conda_import_tests=False,
     install_requires=[
         # These dependencies are not pure-python.
         # In general, avoid adding more dependencies like them because they are not
@@ -173,6 +176,11 @@ setup(
         "cloudpickle",
         "tqdm>4.29.0",
         "tensorboard",
+        "pytorch==1.10.0",
+        "torchvision",
+        "numpy==1.21.6",
+        "protobuf==3.19.1",
+        # "torchvision==0.11.1",
         # Lock version of fvcore/iopath because they may have breaking changes
         # NOTE: when updating fvcore/iopath version, make sure fvcore depends
         # on compatible version of iopath.
