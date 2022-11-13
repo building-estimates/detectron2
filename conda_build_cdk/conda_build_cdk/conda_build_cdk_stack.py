@@ -54,10 +54,7 @@ class CondaBuildCdkStack(Stack):
                     'goofys $conda_channel_bucket /mnt/channels',
                 ],
                 commands=[
-                    "conda config --add channels conda-forge",
-                    "conda config --add channels fastai",
-                    "conda config --add channels pytorch",
-                    "conda install pytorch=1.10.0 numpy=1.21.6 cxx-compiler conda-build python=3.8.3 boto3",
+                    "conda env update --name base --file environment.lock.yml --prune",
                     "python setup.py bdist_conda",
                     "cp /opt/conda/conda-bld/linux-64/detectron2-* /mnt/channels/$conda_channel_name/linux-64/",
                     #"LINUX64_PACKAGES=/mnt/channels/$conda_channel_name/linux-64/*.tar.bz2 && conda convert -f --platform osx-64 ${LINUX64_PACKAGES} -o /mnt/channels/$conda_channel_name",
@@ -78,8 +75,8 @@ class CondaBuildCdkStack(Stack):
                             's3:DeleteObject'
                         ],
                         resources=[
-                            "arn:aws:s3:::"+resource_names['conda_channel_bucket'],
-                            "arn:aws:s3:::"+resource_names['conda_channel_bucket'] + "/*"]
+                            "arn:aws:s3:::" + resource_names['conda_channel_bucket'],
+                            "arn:aws:s3:::" + resource_names['conda_channel_bucket'] + "/*"]
                     )
                 ]
             )
