@@ -55,7 +55,7 @@ class CondaBuildCdkStack(Stack):
                 ],
                 commands=[
                     "conda install -c conda-forge boto3",
-                    "conda env update --name base --file environment.lock.yml --prune",
+                    "conda env update --file environment.lock.yml --prune",
                     "python setup.py bdist_conda",
                     "cp /opt/conda/conda-bld/linux-64/detectron2-* /mnt/channels/$conda_channel_name/linux-64/",
                     #"LINUX64_PACKAGES=/mnt/channels/$conda_channel_name/linux-64/*.tar.bz2 && conda convert -f --platform osx-64 ${LINUX64_PACKAGES} -o /mnt/channels/$conda_channel_name",
