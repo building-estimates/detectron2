@@ -54,6 +54,7 @@ class CondaBuildCdkStack(Stack):
                     'goofys $conda_channel_bucket /mnt/channels',
                 ],
                 commands=[
+                    "conda install -c conda-forge boto3",
                     "conda env update --name base --file environment.lock.yml --prune",
                     "python setup.py bdist_conda",
                     "cp /opt/conda/conda-bld/linux-64/detectron2-* /mnt/channels/$conda_channel_name/linux-64/",
