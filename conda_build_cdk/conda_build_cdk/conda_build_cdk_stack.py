@@ -54,7 +54,10 @@ class CondaBuildCdkStack(Stack):
                     'goofys $conda_channel_bucket /mnt/channels',
                 ],
                 commands=[
-                    "conda install -c pytorch -c conda-forge -c fastai --file environment.lock.yml",
+                    "conda config --add channels conda-forge",
+                    "conda config --add channels fastai",
+                    "conda config --add channels pytorch",
+                    "conda install --file environment.lock.yml",
                     "python setup.py bdist_conda",
                     "cp /opt/conda/conda-bld/linux-64/detectron2-* /mnt/channels/$conda_channel_name/linux-64/",
                     #"LINUX64_PACKAGES=/mnt/channels/$conda_channel_name/linux-64/*.tar.bz2 && conda convert -f --platform osx-64 ${LINUX64_PACKAGES} -o /mnt/channels/$conda_channel_name",
